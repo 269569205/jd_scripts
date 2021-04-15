@@ -1,0 +1,81 @@
+# serverless.yml
+
+#组件信息
+component: scf # (必选) 组件名称，在该实例中为scf
+name: jdscript # (必选) 组件实例名称。
+
+#组件参数配置
+inputs:
+  name: scf-${name} # 云函数名称，默认为 ${name}-${stage}-${app}
+  enableRoleAuth: true # 默认会尝试创建 SCF_QcsRole 角色，如果不需要配置成 false 即可
+  src: ./
+  handler: index.main_handler #入口
+  runtime: Nodejs12.16 # 运行环境 默认 Nodejs10.15
+  region: ap-hongkong # 函数所在区域
+  description: This is a function in ${app} application.
+  memorySize: 128 # 内存大小，单位MB
+  timeout: 900 # 超时时间，单位秒
+  events: # 触发器
+    - timer: #签到 #源头好物红包
+        parameters:
+          name: beansign_coupon
+          cronExpression: "0 0 0 * * * *"
+          enable: true
+          argument: jd_bean_sign&jd_coupon
+    - timer: #东东超市兑换奖品 #摇京豆 #京东汽车兑换
+        parameters:
+          name: blueCoin_clublottery_carexchange
+          cronExpression: "0 0 0 * * * *"
+          enable: true
+          argument: jd_blueCoin&jd_club_lottery&jd_car_exchange
+    - timer: #东东农场 #东东萌宠 #口袋书店 #京喜农场
+        parameters:
+          name: fruit_pet_bookshop_jxnc
+          cronExpression: "0 5 6-18/6,8 * * * *"
+          enable: true
+          argument: jd_fruit&jd_pet&jd_bookshop&jd_jxnc
+    - timer: # 宠汪汪喂食# 宠汪汪# 摇钱树# 京东种豆得豆# 京喜工厂 #东东工厂 #京东炸年兽领爆竹
+        parameters:
+          name: feedPets_joy_moneyTree_plantBean_dreamFactory_jdfactory_nC
+          cronExpression: "0 3 */1 * * * *"
+          enable: true
+          argument: jd_joy_feedPets&jd_joy&jd_moneyTree&jd_plantBean&jd_dreamFactory&jd_jdfactory&jd_nianCollect
+    - timer: #宠汪汪积分兑换奖品 #宠汪汪偷好友积分与狗 #点点券 #东东小窝 #京东直播18豆 #集鞭炮赢京豆
+        parameters:
+          name: joyreward_joysteal_necklace_smallhome_live_firecrackers
+          cronExpression: "0 0 0-16/8,20 * * * *"
+          enable: true
+          argument: jd_joy_reward&jd_joy_steal&jd_necklace&jd_small_home&jd_live&jd_firecrackers
+    - timer: #京东全民开红包 #进店领豆 #取关京东店铺商品 #注销京东会员卡 #京东抽奖机 #京东汽车 #京东秒秒币 #小鸽有礼
+        parameters:
+          name: redPacket_shop_unsubscribe_unbind_lotteryMachine_car_ms_xg
+          cronExpression: "0 10 0 * * * *"
+          enable: true
+          argument: jd_redPacket&jd_shop&jd_unsubscribe&jd_unbind&jd_lotteryMachine&jd_car&jd_ms&jd_xg
+    - timer: #京东天天加速 #天天提鹅 #京东炸年兽
+        parameters:
+          name: speed_daily_egg_nian
+          cronExpression: "0 8 */3 * * * *"
+          enable: true
+          argument: jd_speed&jd_daily_egg&jd_nian
+    - timer: #东东超市
+        parameters:
+          name: superMarket
+          cronExpression: "0 15 * * * * *"
+          enable: true
+          argument: jd_superMarket
+    - timer: #京豆变动通知 #疯狂的joy #京东排行榜 #领京豆额外奖励 #闪购盲盒 #京东年货节 #京东神仙书院 #京东神仙书院答题 #盲盒抽京豆
+        parameters:
+          name: beanchange_crazyjoy_rankingList_beanhome_sgmh_nh_immortal_mh
+          cronExpression: "0 30 7 * * * *"
+          enable: true
+          argument: jd_bean_change&jd_crazy_joy&jd_rankingList&jd_bean_home&jd_sgmh&jd_nh&jd_immortal@jd_immortal_answer&jd_mh
+    - timer: #金融养猪 #十元街 #京东快递 #京东赚赚 #签到领现金 #京喜签到 #京东炸年兽签到任务 #京东炸年兽AR #京东炸年兽小程序 #京东手机年终奖
+        parameters:
+          name: pigPet_syj_kd_jdzz_cash_sign_niansign_nianar_nianwechat_fes
+          cronExpression: "0 3 1 * * * *"
+          enable: true
+          argument: jd_pigPet&jd_syj&jd_kd&jd_jdzz&jd_cash&jx_sign&jd_nian_sign&jd_nian_ar&jd_nian_wechat&jd_festival
+  environment: #  环境变量
+    variables: #  环境变量对象
+      AAA: BBB # 不要删除，用来格式化对齐追加的变量的
