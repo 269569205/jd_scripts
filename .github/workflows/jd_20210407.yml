@@ -6,7 +6,7 @@ name: 20210407
 on:
   workflow_dispatch:
   schedule:
-    - cron: '0 */2 * * *'
+    - cron: '0 */6 * * *'
   watch:
     types: started
   repository_dispatch:
