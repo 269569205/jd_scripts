@@ -32,7 +32,7 @@ jobs:
         run: |
           cd ~/scripts
           node jd_dreamFactory.js
-          node jd_factory_component.js
+#          node jd_factory_component.js
         env:
           JD_COOKIE: ${{ secrets.JD_COOKIE }}
           JD_DEBUG: ${{ secrets.JD_DEBUG }}
